@@ -1,5 +1,18 @@
 package sort
 
+func InsertionInt(arr []int, desc bool) []int {
+	for i := 1; i < len(arr); i++ {
+		key := arr[i]
+		j := i - 1
+		for j >= 0 && (!(arr[j] > key) && desc || arr[j] > key && !desc) {
+			arr[j+1] = arr[j]
+			j--
+		}
+		arr[j+1] = key
+	}
+	return arr
+}
+
 func InsertionInt8(arr []int8, desc bool) []int8 {
 	for i := 1; i < len(arr); i++ {
 		key := arr[i]
@@ -52,7 +65,7 @@ func InsertionInt64(arr []int64, desc bool) []int64 {
 	return arr
 }
 
-func InsertionInt(arr []int, desc bool) []int {
+func InsertionUint(arr []uint, desc bool) []uint {
 	for i := 1; i < len(arr); i++ {
 		key := arr[i]
 		j := i - 1
@@ -105,19 +118,6 @@ func InsertionUint32(arr []uint32, desc bool) []uint32 {
 }
 
 func InsertionUint64(arr []uint64, desc bool) []uint64 {
-	for i := 1; i < len(arr); i++ {
-		key := arr[i]
-		j := i - 1
-		for j >= 0 && (!(arr[j] > key) && desc || arr[j] > key && !desc) {
-			arr[j+1] = arr[j]
-			j--
-		}
-		arr[j+1] = key
-	}
-	return arr
-}
-
-func InsertionUint(arr []uint, desc bool) []uint {
 	for i := 1; i < len(arr); i++ {
 		key := arr[i]
 		j := i - 1
