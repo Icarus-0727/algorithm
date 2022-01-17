@@ -13,7 +13,7 @@ func InsertionInt(arr []int, desc bool) []int {
 	for i := 1; i < len(arr); i++ {
 		key := arr[i]
 		j := i - 1
-		for j >= 0 && (!(arr[j] > key) && desc || arr[j] > key && !desc) {
+		for j >= 0 && (!desc && arr[j] > key || desc && arr[j] < key) {
 			arr[j+1] = arr[j]
 			j--
 		}

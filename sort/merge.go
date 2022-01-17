@@ -34,7 +34,7 @@ func mergeIntArr(a, b []int, desc bool) []int {
 
 	arr, i, ai, bi := make([]int, len(a)+len(b)), 0, 0, 0
 	for ; ai < len(a) && bi < len(b); i++ {
-		if !desc && (a[ai] < b[bi]) || desc && (a[ai] > b[bi]) {
+		if !desc && a[ai] < b[bi] || desc && a[ai] > b[bi] {
 			arr[i], ai = a[ai], ai+1
 		} else {
 			arr[i], bi = b[bi], bi+1
