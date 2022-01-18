@@ -10,6 +10,10 @@ package sort
 // @param desc
 // @return []int
 func SelectionInt(arr []int, desc bool) []int {
+	if arr == nil || len(arr) < 2 {
+		return arr
+	}
+
 	for i := 0; i < len(arr)-1; i++ {
 		ki := i
 		for j := i + 1; j < len(arr); j++ {
