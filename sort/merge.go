@@ -4,6 +4,8 @@
 // @CreateAt 1/15/2022 3:36 PM:00
 package sort
 
+import "sync"
+
 // MergeInt
 // @Description: 归并排序，递归实现
 // @param arr
@@ -14,8 +16,23 @@ func MergeInt(arr []int, desc bool) []int {
 	if arr == nil || len(arr) < 2 {
 		return arr
 	}
-	a := MergeInt(arr[:len(arr)/2], desc)
-	b := MergeInt(arr[len(arr)/2:], desc)
+
+	var a []int
+	var b []int
+	var wait sync.WaitGroup
+	wait.Add(2)
+
+	go func() {
+		a = MergeInt(arr[:len(arr)/2], desc)
+		wait.Done()
+	}()
+	go func() {
+		b = MergeInt(arr[len(arr)/2:], desc)
+		wait.Done()
+	}()
+
+	wait.Wait()
+
 	return mergeArr(a, b, desc)
 }
 
