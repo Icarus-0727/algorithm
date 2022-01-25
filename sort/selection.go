@@ -17,14 +17,12 @@ func SelectionInt(arr []int, desc bool) []int {
 	for i := 0; i < len(arr)-1; i++ {
 		ki := i
 		for j := i + 1; j < len(arr); j++ {
-			if !desc && arr[ki] > arr[j] || desc && arr[ki] < arr[j] {
+			if xor(desc, arr[ki] > arr[j]) {
 				ki = j
 			}
 		}
 		if ki != i {
-			arr[i] ^= arr[ki]
-			arr[ki] ^= arr[i]
-			arr[i] ^= arr[ki]
+			swap(&arr[ki], &arr[i])
 		}
 	}
 	return arr

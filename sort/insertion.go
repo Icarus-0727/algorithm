@@ -12,7 +12,7 @@ package sort
 func InsertionInt(arr []int, desc bool) []int {
 	for i := 1; i < len(arr); i++ {
 		j, key := i-1, arr[i]
-		for j >= 0 && (!desc && arr[j] > key || desc && arr[j] < key) {
+		for j >= 0 && xor(desc, arr[j] > key) {
 			arr[j+1], j = arr[j], j-1
 		}
 		arr[j+1] = key

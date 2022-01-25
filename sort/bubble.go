@@ -16,10 +16,8 @@ func BubbleInt(arr []int, desc bool) []int {
 
 	for i := len(arr); i > 0; i-- {
 		for j := 1; j < i; j++ {
-			if !desc && arr[j-1] > arr[j] || desc && arr[j-1] < arr[j] {
-				arr[j-1] ^= arr[j]
-				arr[j] ^= arr[j-1]
-				arr[j-1] ^= arr[j]
+			if xor(desc, arr[j-1] > arr[j]) {
+				swap(&arr[j], &arr[j-1])
 			}
 		}
 	}

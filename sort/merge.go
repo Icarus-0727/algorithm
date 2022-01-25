@@ -16,15 +16,15 @@ func MergeInt(arr []int, desc bool) []int {
 	}
 	a := MergeInt(arr[:len(arr)/2], desc)
 	b := MergeInt(arr[len(arr)/2:], desc)
-	return mergeIntArr(a, b, desc)
+	return mergeArr(a, b, desc)
 }
 
-// mergeIntArr
+// mergeArr
 // @Description: 将两个有序数组合并成一个有序数组
 // @param a
 // @param b
 // @return []int
-func mergeIntArr(a, b []int, desc bool) []int {
+func mergeArr(a, b []int, desc bool) []int {
 	if a == nil || len(a) == 0 {
 		return b
 	}
@@ -34,7 +34,7 @@ func mergeIntArr(a, b []int, desc bool) []int {
 
 	arr, i, ai, bi := make([]int, len(a)+len(b)), 0, 0, 0
 	for ; ai < len(a) && bi < len(b); i++ {
-		if !desc && a[ai] < b[bi] || desc && a[ai] > b[bi] {
+		if xor(desc, a[ai] < b[bi]) {
 			arr[i], ai = a[ai], ai+1
 		} else {
 			arr[i], bi = b[bi], bi+1

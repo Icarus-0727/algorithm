@@ -37,19 +37,14 @@ func partition(arr []int, desc bool) int {
 		if !desc && arr[i] >= key || desc && arr[i] <= key {
 			j--
 			if i != j {
-				arr[i] ^= arr[j]
-				arr[j] ^= arr[i]
-				arr[i] ^= arr[j]
+				swap(&arr[i], &arr[j])
 			}
 		}
 	}
 
-	j--
-	if j != 0 {
-		arr[0] ^= arr[j]
-		arr[j] ^= arr[0]
-		arr[0] ^= arr[j]
+	if j-1 != 0 {
+		swap(&arr[0], &arr[j-1])
 	}
 
-	return j + 1
+	return j
 }

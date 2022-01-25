@@ -16,7 +16,7 @@ func ShellInt(arr []int, desc bool) []int {
 	for gap := len(arr) / 2; gap > 0; gap /= 2 {
 		for i := gap; i < len(arr); i++ {
 			j, key := i-gap, arr[i]
-			for j >= 0 && (!desc && arr[j] > key || desc && arr[j] < key) {
+			for j >= 0 && xor(desc, arr[j] > key) {
 				arr[j+gap], j = arr[j], j-gap
 			}
 			arr[j+gap] = key

@@ -17,7 +17,6 @@ func HeapInt(arr []int, desc bool) []int {
 	for i := len(arr); i > 1; i-- {
 		setLatestElem(arr[:i], desc)
 	}
-
 	return arr
 }
 
@@ -27,6 +26,7 @@ func HeapInt(arr []int, desc bool) []int {
 // @param desc 降序
 // @return []int
 func setLatestElem(arr []int, desc bool) {
+	// 将最大/小的元素交换到顶端
 	for i := int(math.Ceil(float64(len(arr))/2)) - 1; i >= 0; i-- {
 		max, left, right := i, 2*i+1, 2*i+2
 		if left < len(arr) && xor(desc, arr[max] < arr[left]) {
