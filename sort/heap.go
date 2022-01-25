@@ -14,30 +14,51 @@ import (
 // @param desc 降序
 // @return []int
 func HeapInt(arr []int, desc bool) []int {
-	for i := len(arr); i > 1; i-- {
-		setLatestElem(arr[:i], desc)
+	if desc {
+		buildMinHeap(arr)
+	} else {
+		buildMaxHeap(arr)
+	}
+	for i := len(arr) - 1; i > 0; i-- {
+		swap(&arr[0], &arr[i])
+		heapify(arr[:i], 0, !desc)
 	}
 	return arr
 }
 
-// setLatestElem
-// @Description: 将最大/小的元素交换到最后
-// @param arr 操作的数组
-// @param desc 降序
-// @return []int
-func setLatestElem(arr []int, desc bool) {
-	// 将最大/小的元素交换到顶端
+// buildMaxHeap
+// @Description: 构建大根堆
+// @param arr
+func buildMaxHeap(arr []int) {
 	for i := int(math.Ceil(float64(len(arr))/2)) - 1; i >= 0; i-- {
-		max, left, right := i, 2*i+1, 2*i+2
-		if left < len(arr) && xor(desc, arr[max] < arr[left]) {
-			max = left
-		}
-		if right < len(arr) && xor(desc, arr[max] < arr[right]) {
-			max = right
-		}
-		if max != i {
-			swap(&arr[i], &arr[max])
-		}
+		heapify(arr, i, true)
 	}
-	swap(&arr[0], &arr[len(arr)-1])
+}
+
+// buildMinHeap
+// @Description: 构建小根堆
+// @param arr
+func buildMinHeap(arr []int) {
+	for i := int(math.Ceil(float64(len(arr))/2)) - 1; i >= 0; i-- {
+		heapify(arr, i, false)
+	}
+}
+
+// heapify
+// @Description: 调整堆
+// @param arr
+// @param root 调整的起点
+// @param max true：调整大根堆；false：调整小根堆
+func heapify(arr []int, root int, max bool) {
+	flag, left, right := root, 2*root+1, 2*root+2
+	if left < len(arr) && xor(max, arr[flag] > arr[left]) {
+		flag = left
+	}
+	if right < len(arr) && xor(max, arr[flag] > arr[right]) {
+		flag = right
+	}
+	if flag != root {
+		swap(&arr[root], &arr[flag])
+		heapify(arr, flag, max)
+	}
 }
