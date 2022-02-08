@@ -4,21 +4,13 @@
 // @CreateAt 2022/1/25 9:23:00
 package sort
 
-import (
-	"math"
-)
-
 // HeapInt
 // @Description: 堆排序
 // @param arr 排序数组
 // @param desc 降序
 // @return []int
 func HeapInt(arr []int, desc bool) []int {
-	if desc {
-		buildMinHeap(arr)
-	} else {
-		buildMaxHeap(arr)
-	}
+	buildMinOrMaxHeap(arr, !desc)
 	for i := len(arr) - 1; i > 0; i-- {
 		swap(&arr[0], &arr[i])
 		heapify(arr[:i], 0, !desc)
@@ -26,21 +18,13 @@ func HeapInt(arr []int, desc bool) []int {
 	return arr
 }
 
-// buildMaxHeap
-// @Description: 构建大根堆
+// buildMinOrMaxHeap
+// @Description: 构建大根堆或小根堆
 // @param arr
-func buildMaxHeap(arr []int) {
-	for i := int(math.Ceil(float64(len(arr))/2)) - 1; i >= 0; i-- {
-		heapify(arr, i, true)
-	}
-}
-
-// buildMinHeap
-// @Description: 构建小根堆
-// @param arr
-func buildMinHeap(arr []int) {
-	for i := int(math.Ceil(float64(len(arr))/2)) - 1; i >= 0; i-- {
-		heapify(arr, i, false)
+// @param isMax true: 构建大根堆；false: 构建小根堆
+func buildMinOrMaxHeap(arr []int, isMax bool) {
+	for i := len(arr)/2 - 1; i >= 0; i-- {
+		heapify(arr, i, isMax)
 	}
 }
 
@@ -48,17 +32,22 @@ func buildMinHeap(arr []int) {
 // @Description: 调整堆
 // @param arr
 // @param root 调整的起点
-// @param max true：调整大根堆；false：调整小根堆
-func heapify(arr []int, root int, max bool) {
-	flag, left, right := root, 2*root+1, 2*root+2
-	if left < len(arr) && xor(max, arr[flag] > arr[left]) {
+// @param isMax true：调整大根堆；false：调整小根堆
+func heapify(arr []int, root int, isMax bool) {
+	flag := root
+	left := 2*root + 1
+	right := left + 1
+
+	// 判断是否需要调整
+	if left < len(arr) && xor(isMax, arr[flag] > arr[left]) {
 		flag = left
 	}
-	if right < len(arr) && xor(max, arr[flag] > arr[right]) {
+	if right < len(arr) && xor(isMax, arr[flag] > arr[right]) {
 		flag = right
 	}
+
 	if flag != root {
-		swap(&arr[root], &arr[flag])
-		heapify(arr, flag, max)
+		swap(&arr[root], &arr[flag]) // 调整
+		heapify(arr, flag, isMax)    // 对子树重新调整
 	}
 }
