@@ -8,9 +8,9 @@ package sort
 // @Description: 计数排序
 // @param arr
 // @param desc
-func CountingInt(arr []int, desc bool) {
+func CountingInt(arr []int, desc bool) []int {
 	if arr == nil || len(arr) < 2 {
-		return
+		return arr
 	}
 
 	max := 0
@@ -40,4 +40,6 @@ func CountingInt(arr []int, desc bool) {
 			flag++
 		}
 	}
+
+	return arr
 }
