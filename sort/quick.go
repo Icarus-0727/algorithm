@@ -4,7 +4,9 @@
 // @CreateAt 2022/1/18 16:55:00
 package sort
 
-import "sync"
+import (
+	"sync"
+)
 
 func QuickInt(arr []int, desc bool) []int {
 	if arr == nil || len(arr) < 2 {
@@ -21,7 +23,7 @@ func QuickInt(arr []int, desc bool) []int {
 		wait.Done()
 	}()
 	go func() {
-		QuickInt(arr[pivot:], desc)
+		QuickInt(arr[pivot+1:], desc)
 		wait.Done()
 	}()
 
@@ -31,20 +33,14 @@ func QuickInt(arr []int, desc bool) []int {
 }
 
 func partition(arr []int, desc bool) int {
-	key, j := arr[0], len(arr)
-
-	for i := len(arr) - 1; i > 0; i-- {
-		if !desc && arr[i] >= key || desc && arr[i] <= key {
-			j--
-			if i != j {
-				swap(&arr[i], &arr[j])
-			}
+	pivot, key := 0, 1
+	for i := 1; i < len(arr); i++ {
+		if xor(desc, arr[i] < arr[pivot]) {
+			swap(&arr[i], &arr[key])
+			key++
 		}
 	}
+	swap(&arr[pivot], &arr[key-1])
 
-	if j-1 != 0 {
-		swap(&arr[0], &arr[j-1])
-	}
-
-	return j
+	return key - 1
 }

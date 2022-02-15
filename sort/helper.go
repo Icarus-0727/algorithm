@@ -9,6 +9,9 @@ package sort
 // @param a
 // @param b
 func swap(a, b *int) {
+	if *a == *b {
+		return
+	}
 	*a ^= *b
 	*b ^= *a
 	*a ^= *b
